@@ -1,0 +1,33 @@
+@media screen {
+    caption {
+        font-weight: bold;
+        margin-bottom: 10px;
+        font-size: 1.2em;
+    }
+    #in {
+    }
+    #in table {
+        width: 100%;
+        margin-top: 20px;
+    }
+    tr {
+        width: 100%;
+    }
+    td {
+        width: 50%;
+    }
+    #pw {
+        margin:0 auto;
+        text-align: center;
+    }
+    #pw table {
+        display: inline-block;
+    }
+    #in {
+        width: 40%;
+        margin:auto;
+    }
+    #td-pw-front, #td-pw-back {
+        text-align: center;
+    }
+}
