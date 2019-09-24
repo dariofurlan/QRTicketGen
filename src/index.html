@@ -19,31 +19,39 @@
             </tr>
             <tr>
                 <td><label for="quantity">Ticket Quantity</label></td>
-                <td><input type="number" id="quantity" min="1"></td>
+                <td><input type="number" id="quantity" min="0"></td>
             </tr>
         </table>
 
         <table>
             <caption>Ticket Settings</caption>
             <tr>
+                <td><label for="ticket_width">Width:</label></td>
+                <td><input type="number" id="ticket_width" step="0.1"/></td>
+            </tr>
+            <tr>
+                <td><label for="ticket_height">Height:</label></td>
+                <td><input type="number" id="ticket_height" step="0.1"/></td>
+            </tr>
+            <tr>
                 <td><label for="front-graphic">Front's Graphic</label></td>
                 <td><input type="file" id="front-graphic" accept="image/*"/></td>
             </tr>
             <tr>
-                <td><label for="bg-color">Background Color</label></td>
-                <td><input type="color" id="bg-color"/></td>
+                <td><label for="front_bg_color">Front Background Color</label></td>
+                <td><input type="color" id="front_bg_color"/></td>
             </tr>
             <tr>
-                <td><label for="rounded-borders">Rounded Borders</label></td>
-                <td><input type="checkbox" id="rounded-borders"/></td>
+                <td><label for="back_bg_color">Back Background Color</label></td>
+                <td><input type="color" id="back_bg_color"/></td>
             </tr>
             <tr>
                 <td><label for="bleed">Bleed</label></td>
-                <td><input type="number" id="bleed"/>mm</td>
+                <td><input type="number" id="bleed" step="0.1"/>mm</td>
             </tr>
             <tr>
                 <td><label>Qr size</label></td>
-                <td><input type="number" id="qr-size"/>mm</td>
+                <td><input type="number" id="qr-size" step="0.1"/>mm</td>
             </tr>
 
         </table>
@@ -53,14 +61,14 @@
         <table>
             <caption>Page Settings</caption>
             <tr>
-                <td><label for="page_size">Page Size</label></td>
-                <td><select id="page_size">
-                    <option>A1</option>
-                    <option>A2</option>
-                    <option>A3</option>
-                    <option selected="selected">A4</option>
-                    <option>A5</option>
-                </select></td>
+                <td rowspan="2"><label for="page_size">Page Size</label></td>
+                <td rowspan="2"><select id="page_size"></select></td>
+                <td><label for="page_width">Width:</label></td>
+                <td><input type="number" id="page_width"/></td>
+            </tr>
+            <tr>
+                <td><label for="page_height">Height:</label></td>
+                <td><input type="number" id="page_height"/></td>
             </tr>
             <tr>
                 <td><label for="page_orientation">Page Orientation</label></td>
@@ -71,8 +79,6 @@
             </tr>
 
         </table>
-
-        <!--"back" page orientation if flipped horizontally, flipped vertically-->
 
         <button id="gen">Generate</button>
     </div>
