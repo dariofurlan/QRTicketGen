@@ -4,9 +4,6 @@
         margin-bottom: 10px;
         font-size: 1.2em;
     }
-    #in {
-
-    }
     #in table {
         width: 100%;
         margin-top: 20px;
@@ -30,5 +27,19 @@
     }
     #td-pw-front, #td-pw-back {
         text-align: center;
+    }
+    #out div {
+        margin: 0 auto;
+    }
+    #out table {
+        table-layout: fixed;
+        border-collapse: collapse;
+        width: 100%;
+        height: 100%;
+    }
+    #out tr td {
+        border: 1px solid black;
+        margin: 0;
+        padding: 0;
     }
 }

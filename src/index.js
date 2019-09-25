@@ -1,5 +1,5 @@
 import './style.scss';
-import {PAPER_SIZES, Ticket} from './classes.js';
+import {Page, PAPER_SIZES, Ticket} from './classes.js';
 
 // use double hash
 // one known to every staff memebers
@@ -23,6 +23,7 @@ new Settings();
 
 function Settings() {
     const PreviewTicket = new Ticket();
+    const FrontPage = new Page();
     const _static_text = document.getElementById('static_string'); //oninput
     const _salt = document.getElementById('salt'); //oninput
     const _quantity = document.getElementById('quantity'); //oninput
@@ -38,6 +39,7 @@ function Settings() {
     const _custom_page_width = document.getElementById('page_width');
     const _custom_page_height = document.getElementById('page_height');
     const _page_orientation = document.getElementById('page_orientation');
+    const _page_padding = document.getElementById('page_padding');
 
     let static_text = "";
     let salt = "";
@@ -50,10 +52,11 @@ function Settings() {
     let back_bg_color = "#000000";
     let bleed = DEFAULT_BLEED;
     let qr_size = 40;
-    let page_size = "A4";
+    let page_size = "";
     let custom_width = "";
     let custom_height = "";
-    let page_orientation = "landscape";
+    let page_orientation = 0;
+    let page_padding = 10;
 
     //init with default values
     _static_text.value = static_text;
@@ -68,17 +71,26 @@ function Settings() {
     _bleed.value = bleed;
     _qr_size.value = qr_size;
     for (let type in PAPER_SIZES) {
-        for (let paper_size in type) {
-
-        }
+        let option = document.createElement('option');
+        option.innerHTML = type + " " + PAPER_SIZES[type]["w"] + "x" + PAPER_SIZES[type]["h"];
+        option.value = type;
+        _page_size.appendChild(option);
     }
+    _custom_page_width.value = 0;
+    _custom_page_height.value = 0;
+    _page_orientation.selectedIndex = page_orientation;
+    _page_padding.value = page_padding;
 
     document.getElementById('td-pw-front').appendChild(PreviewTicket.front.el);
     document.getElementById('td-pw-back').appendChild(PreviewTicket.back.el);
+    document.getElementById('out').appendChild(FrontPage.el);
 
     this.load = () => {
 
-        console.log(front_bg_color, back_bg_color);
+        FrontPage.width = custom_width;
+        FrontPage.height = custom_height;
+        FrontPage.padding = page_padding;
+
         _qr_size.max = Math.min(ticket_width, ticket_height);
         PreviewTicket.width = ticket_width;
         PreviewTicket.height = ticket_height;
@@ -90,6 +102,7 @@ function Settings() {
         PreviewTicket.back.addQR(sha256(static_text + salt + "0"));
 
         PreviewTicket.refresh();
+        FrontPage.refresh();
     };
 
     // events
@@ -142,26 +155,58 @@ function Settings() {
         qr_size = _qr_size.value;
         this.load()
     };
+    _page_size.onchange = () => {
+        if (_page_size.value === "") {
+            _custom_page_width.value = 0;
+            _custom_page_height.value = 0;
+            page_size = "";
+            return;
+        }
 
+        page_size = _page_size.value;
+        let d = PAPER_SIZES[page_size];
+        if (_page_orientation.selectedIndex === 0) {
+            custom_width = d.w;
+            custom_height = d.h;
+        } else {
+            custom_width = d.h;
+            custom_height = d.w;
+        }
+        _custom_page_width.value = custom_width;
+        _custom_page_height.value = custom_height;
+        console.log(d.w, d.h);
+        this.load();
+    };
+    _custom_page_width.oninput = () => {
+        custom_width = _custom_page_width.value;
+        _page_size.selectedIndex = 0;
+        this.load();
+    };
+    _custom_page_height.oninput = () => {
+        custom_height = _custom_page_height.value;
+        _page_size.selectedIndex = 0;
+        this.load();
+    };
+    _page_orientation.onchange = () => {
+        if (_page_orientation.selectedIndex === 0) {
+            custom_width = PAPER_SIZES[page_size]["w"];
+            custom_height = PAPER_SIZES[page_size]["h"];
+        } else {
+            custom_width = PAPER_SIZES[page_size]["h"];
+            custom_height = PAPER_SIZES[page_size]["w"];
+        }
+
+        _custom_page_width.value = custom_width;
+        _custom_page_height.value = custom_height;
+        this.load();
+    };
+    _page_padding.oninput = () => {
+        page_padding = _page_padding.value;
+        this.load()
+    };
 
     this.load();
 }
-
-document.getElementById('gen').onclick = () => {
-    const static_string = document.getElementById('static_string').value;
-    const salt = document.getElementById('salt').value;
-    const quantity = document.getElementById('quantity').value;
-
-    const tickets = [];
-    const out_hashes = gen_hashes(static_string, salt, quantity);
-    for (let hash in out_hashes) {
-
-        QRCode.toCanvas(hash, {errorCorrectionLevel: 'H', maskPattern: 5}, function (err, canvas) {
-            if (err) throw err;
-            // out_div.appendChild(canvas)
-        })
-    }
-};
 
 function gen_hashes(static_string, salt, quantity) {
     let stat = static_string + salt;

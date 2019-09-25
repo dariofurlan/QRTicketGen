@@ -55,32 +55,32 @@
             </tr>
 
         </table>
-        <!--size standard is 85.60x53.98-->
-        <!--front graphic-->
-        <!--background color-->
+
+
         <table>
             <caption>Page Settings</caption>
             <tr>
                 <td rowspan="2"><label for="page_size">Page Size</label></td>
-                <td rowspan="2"><select id="page_size"></select></td>
+                <td rowspan="2"><select id="page_size"><option value="">Custom</option></select></td>
                 <td><label for="page_width">Width:</label></td>
-                <td><input type="number" id="page_width"/></td>
+                <td><input type="number" id="page_width" step="0.01"/></td>
             </tr>
             <tr>
                 <td><label for="page_height">Height:</label></td>
-                <td><input type="number" id="page_height"/></td>
+                <td><input type="number" id="page_height" step="0.01"/></td>
             </tr>
             <tr>
                 <td><label for="page_orientation">Page Orientation</label></td>
-                <td><select id="page_orientation">
-                    <option>portrait</option>
-                    <option selected="selected">landscape</option>
+                <td colspan="3"><select id="page_orientation">
+                    <option selected="selected">portrait</option>
+                    <option>landscape</option>
                 </select></td>
             </tr>
-
+            <tr>
+                <td><label for="page_padding">Print limit</label></td>
+                <td colspan="3"><input type="number" id="page_padding" /></td>
+            </tr>
         </table>
-
-        <button id="gen">Generate</button>
     </div>
     <div id="pw">
         <table>
@@ -97,8 +97,9 @@
             </tr>
         </table>
     </div>
+    <div id="out"></div>
 </div>
 <!--<embed class="pdfobject" src="data:application/pdf;filename=generated.pdf;base64,JVBERi0xLjMKJbrfrOAKMyAwIG9iago8PC9UeXBlIC9QYWdlCi9QYXJlbnQgMSAwIFIKL1Jlc291cmNlcyAyIDAgUgovTWVkaWFCb3ggWzAgMCA1OTUuMjggODQxLjg5XQovQ29udGVudHMgNCAwIFIKPj4KZW5kb2JqCjQgMCBvYmoKPDwKL0xlbmd0aCAxNDAKPj4Kc3RyZWFtCjAuNTcgdwowIEcKQlQKL0YxIDQwIFRmCjQ2LjAwIFRMCjAgZwo5OS4yMSA3NzEuMDIgVGQKKE9jdG9ueWFuIGxvdmVzIGpzUERGKSBUagpFVApCVAovRjEgNDAgVGYKNDYuMDAgVEwKMCBnCjE0MS43MyA4MTMuNTQgVGQKKEdJb3JnaW8pIFRqCkVUCmVuZHN0cmVhbQplbmRvYmoKMSAwIG9iago8PC9UeXBlIC9QYWdlcwovS2lkcyBbMyAwIFIgXQovQ291bnQgMQo+PgplbmRvYmoKNSAwIG9iago8PAovVHlwZSAvRm9udAovQmFzZUZvbnQgL0hlbHZldGljYQovU3VidHlwZSAvVHlwZTEKL0VuY29kaW5nIC9XaW5BbnNpRW5jb2RpbmcKL0ZpcnN0Q2hhciAzMgovTGFzdENoYXIgMjU1Cj4+CmVuZG9iago2IDAgb2JqCjw8Ci9UeXBlIC9Gb250Ci9CYXNlRm9udCAvSGVsdmV0aWNhLUJvbGQKL1N1YnR5cGUgL1R5cGUxCi9FbmNvZGluZyAvV2luQW5zaUVuY29kaW5nCi9GaXJzdENoYXIgMzIKL0xhc3RDaGFyIDI1NQo+PgplbmRvYmoKNyAwIG9iago8PAovVHlwZSAvRm9udAovQmFzZUZvbnQgL0hlbHZldGljYS1PYmxpcXVlCi9TdWJ0eXBlIC9UeXBlMQovRW5jb2RpbmcgL1dpbkFuc2lFbmNvZGluZwovRmlyc3RDaGFyIDMyCi9MYXN0Q2hhciAyNTUKPj4KZW5kb2JqCjggMCBvYmoKPDwKL1R5cGUgL0ZvbnQKL0Jhc2VGb250IC9IZWx2ZXRpY2EtQm9sZE9ibGlxdWUKL1N1YnR5cGUgL1R5cGUxCi9FbmNvZGluZyAvV2luQW5zaUVuY29kaW5nCi9GaXJzdENoYXIgMzIKL0xhc3RDaGFyIDI1NQo+PgplbmRvYmoKOSAwIG9iago8PAovVHlwZSAvRm9udAovQmFzZUZvbnQgL0NvdXJpZXIKL1N1YnR5cGUgL1R5cGUxCi9FbmNvZGluZyAvV2luQW5zaUVuY29kaW5nCi9GaXJzdENoYXIgMzIKL0xhc3RDaGFyIDI1NQo+PgplbmRvYmoKMTAgMCBvYmoKPDwKL1R5cGUgL0ZvbnQKL0Jhc2VGb250IC9Db3VyaWVyLUJvbGQKL1N1YnR5cGUgL1R5cGUxCi9FbmNvZGluZyAvV2luQW5zaUVuY29kaW5nCi9GaXJzdENoYXIgMzIKL0xhc3RDaGFyIDI1NQo+PgplbmRvYmoKMTEgMCBvYmoKPDwKL1R5cGUgL0ZvbnQKL0Jhc2VGb250IC9Db3VyaWVyLU9ibGlxdWUKL1N1YnR5cGUgL1R5cGUxCi9FbmNvZGluZyAvV2luQW5zaUVuY29kaW5nCi9GaXJzdENoYXIgMzIKL0xhc3RDaGFyIDI1NQo+PgplbmRvYmoKMTIgMCBvYmoKPDwKL1R5cGUgL0ZvbnQKL0Jhc2VGb250IC9Db3VyaWVyLUJvbGRPYmxpcXVlCi9TdWJ0eXBlIC9UeXBlMQovRW5jb2RpbmcgL1dpbkFuc2lFbmNvZGluZwovRmlyc3RDaGFyIDMyCi9MYXN0Q2hhciAyNTUKPj4KZW5kb2JqCjEzIDAgb2JqCjw8Ci9UeXBlIC9Gb250Ci9CYXNlRm9udCAvVGltZXMtUm9tYW4KL1N1YnR5cGUgL1R5cGUxCi9FbmNvZGluZyAvV2luQW5zaUVuY29kaW5nCi9GaXJzdENoYXIgMzIKL0xhc3RDaGFyIDI1NQo+PgplbmRvYmoKMTQgMCBvYmoKPDwKL1R5cGUgL0ZvbnQKL0Jhc2VGb250IC9UaW1lcy1Cb2xkCi9TdWJ0eXBlIC9UeXBlMQovRW5jb2RpbmcgL1dpbkFuc2lFbmNvZGluZwovRmlyc3RDaGFyIDMyCi9MYXN0Q2hhciAyNTUKPj4KZW5kb2JqCjE1IDAgb2JqCjw8Ci9UeXBlIC9Gb250Ci9CYXNlRm9udCAvVGltZXMtSXRhbGljCi9TdWJ0eXBlIC9UeXBlMQovRW5jb2RpbmcgL1dpbkFuc2lFbmNvZGluZwovRmlyc3RDaGFyIDMyCi9MYXN0Q2hhciAyNTUKPj4KZW5kb2JqCjE2IDAgb2JqCjw8Ci9UeXBlIC9Gb250Ci9CYXNlRm9udCAvVGltZXMtQm9sZEl0YWxpYwovU3VidHlwZSAvVHlwZTEKL0VuY29kaW5nIC9XaW5BbnNpRW5jb2RpbmcKL0ZpcnN0Q2hhciAzMgovTGFzdENoYXIgMjU1Cj4+CmVuZG9iagoxNyAwIG9iago8PAovVHlwZSAvRm9udAovQmFzZUZvbnQgL1phcGZEaW5nYmF0cwovU3VidHlwZSAvVHlwZTEKL0ZpcnN0Q2hhciAzMgovTGFzdENoYXIgMjU1Cj4+CmVuZG9iagoxOCAwIG9iago8PAovVHlwZSAvRm9udAovQmFzZUZvbnQgL1N5bWJvbAovU3VidHlwZSAvVHlwZTEKL0ZpcnN0Q2hhciAzMgovTGFzdENoYXIgMjU1Cj4+CmVuZG9iagoyIDAgb2JqCjw8Ci9Qcm9jU2V0IFsvUERGIC9UZXh0IC9JbWFnZUIgL0ltYWdlQyAvSW1hZ2VJXQovRm9udCA8PAovRjEgNSAwIFIKL0YyIDYgMCBSCi9GMyA3IDAgUgovRjQgOCAwIFIKL0Y1IDkgMCBSCi9GNiAxMCAwIFIKL0Y3IDExIDAgUgovRjggMTIgMCBSCi9GOSAxMyAwIFIKL0YxMCAxNCAwIFIKL0YxMSAxNSAwIFIKL0YxMiAxNiAwIFIKL0YxMyAxNyAwIFIKL0YxNCAxOCAwIFIKPj4KL1hPYmplY3QgPDwKPj4KPj4KZW5kb2JqCjE5IDAgb2JqCjw8Ci9Qcm9kdWNlciAoanNQREYgMS41LjMpCi9DcmVhdGlvbkRhdGUgKEQ6MjAxOTA5MjIyMzM2MDcrMDInMDAnKQo+PgplbmRvYmoKMjAgMCBvYmoKPDwKL1R5cGUgL0NhdGFsb2cKL1BhZ2VzIDEgMCBSCi9PcGVuQWN0aW9uIFszIDAgUiAvRml0SCBudWxsXQovUGFnZUxheW91dCAvT25lQ29sdW1uCj4+CmVuZG9iagp4cmVmCjAgMjEKMDAwMDAwMDAwMCA2NTUzNSBmIAowMDAwMDAwMzE1IDAwMDAwIG4gCjAwMDAwMDIxMzIgMDAwMDAgbiAKMDAwMDAwMDAxNSAwMDAwMCBuIAowMDAwMDAwMTI0IDAwMDAwIG4gCjAwMDAwMDAzNzIgMDAwMDAgbiAKMDAwMDAwMDQ5NyAwMDAwMCBuIAowMDAwMDAwNjI3IDAwMDAwIG4gCjAwMDAwMDA3NjAgMDAwMDAgbiAKMDAwMDAwMDg5NyAwMDAwMCBuIAowMDAwMDAxMDIwIDAwMDAwIG4gCjAwMDAwMDExNDkgMDAwMDAgbiAKMDAwMDAwMTI4MSAwMDAwMCBuIAowMDAwMDAxNDE3IDAwMDAwIG4gCjAwMDAwMDE1NDUgMDAwMDAgbiAKMDAwMDAwMTY3MiAwMDAwMCBuIAowMDAwMDAxODAxIDAwMDAwIG4gCjAwMDAwMDE5MzQgMDAwMDAgbiAKMDAwMDAwMjAzNiAwMDAwMCBuIAowMDAwMDAyMzgwIDAwMDAwIG4gCjAwMDAwMDI0NjYgMDAwMDAgbiAKdHJhaWxlcgo8PAovU2l6ZSAyMQovUm9vdCAyMCAwIFIKL0luZm8gMTkgMCBSCi9JRCBbIDw1M0FEOEEzNjA0NkRCQUY0QUZCODVFRTQ3QjI3MzNEMz4gPDUzQUQ4QTM2MDQ2REJBRjRBRkI4NUVFNDdCMjczM0QzPiBdCj4+CnN0YXJ0eHJlZgoyNTcwCiUlRU9G" type="application/pdf" style="overflow: auto; width: 100%; height: 100%;">-->
-<div id="out"></div>
+
 </body>
 </html>
