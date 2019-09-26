@@ -28,18 +28,26 @@
     #td-pw-front, #td-pw-back {
         text-align: center;
     }
+    #out {
+        margin:0;
+        padding:0;
+    }
     #out div {
         margin: 0 auto;
+        padding:0;
     }
     #out table {
+        box-sizing: content-box;
         table-layout: fixed;
         border-collapse: collapse;
         width: 100%;
         height: 100%;
-    }
-    #out tr td {
-        border: 1px solid black;
         margin: 0;
         padding: 0;
     }
+    #out tr td {
+        margin: 0;
+        padding: 0;
+    }
+
 }
